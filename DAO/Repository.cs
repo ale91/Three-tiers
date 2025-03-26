@@ -17,5 +17,29 @@ namespace DAO
                 
             }
         }
+
+        public List<Machines> GetAllMachine()
+        {
+            using (MyDBContext myDb = new MyDBContext())
+            {
+
+                return myDb.Machines.ToList();
+
+            }
+        }
+
+        public List<MachineTools> GetAllMachineTools()
+        {
+
+            using (MyDBContext myDb = new MyDBContext())
+            {
+
+                return myDb.MachineTools.ToList();
+
+            }
+
+        }
+
+
     }
 }

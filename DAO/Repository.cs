@@ -48,12 +48,12 @@ namespace DAO
             }
         }
 
-        //Metodo Delete per Id (aggiunto)
-        public void DeleteTurrets(int id)
+        //Metodo Delete per TurretCode (aggiunto)
+        public void DeleteTurrets(string turretCode)
         {
             using (MyDBContext myDb = new MyDBContext())
             {
-                var turret = myDb.Turrets.Find(id);
+                var turret = myDb.Turrets.FirstOrDefault(t => t.TurretCode == turretCode);
                 if (turret != null)
                 {
                     myDb.Turrets.Remove(turret);
@@ -62,7 +62,7 @@ namespace DAO
             }
         }
 
-        public List<Machines> GetAllMachine()
+        public List<Machines> GetAllMachines()
         {
             using (MyDBContext myDb = new MyDBContext())
             {
@@ -101,17 +101,27 @@ namespace DAO
             }
         }
 
-        //Metodo Delete per Id (aggiunto)
-        public void DeleteMachine(int id)
+        //Metodo Delete per MachineCode (aggiunto)
+        public void DeleteMachine(string machineCode)
         {
             using (MyDBContext myDb = new MyDBContext())
             {
-                var machine = myDb.Machines.Find(id);
+                var machine = myDb.Machines.Where(m => m.MachineCode == machineCode).FirstOrDefault();  //In questo caso, stiamo cercando tutte le macchine (m) il cui Id è uguale al valore di id
                 if (machine != null)
                 {
                     myDb.Machines.Remove(machine);
                     myDb.SaveChanges();
                 }
+            }
+        }
+
+        //Metodo Delete per macchina
+        public void DeleteMachine(Machines machine)
+        {
+            using (MyDBContext myDb = new MyDBContext())
+            {
+                myDb.Machines.Remove(machine);
+                myDb.SaveChanges();
             }
         }
 
@@ -157,11 +167,11 @@ namespace DAO
         }
 
         //Metodo Delete per id (aggiunto)
-        public void DeleteMachineTools(int id)
+        public void DeleteMachineTools(string idTool)
         {
             using (MyDBContext myDb = new MyDBContext())
             {
-                var machineTool = myDb.MachineTools.Find(id);
+                var machineTool = myDb.MachineTools.FirstOrDefault(m => m.IdTool == idTool);
                 if (machineTool != null)
                 {
                     myDb.MachineTools.Remove(machineTool);
@@ -210,11 +220,11 @@ namespace DAO
         }
 
         //Metodo Delete per id (aggiunto)
-        public void DeleteTools(int id)
+        public void DeleteTools(string idTool)
         {
             using (MyDBContext myDb = new MyDBContext())
             {
-                var tool = myDb.Tools.Find(id);
+                var tool = myDb.Tools.FirstOrDefault(t => t.IdTool == idTool);
                 if (tool != null)
                 {
                     myDb.Tools.Remove(tool);
@@ -222,29 +232,5 @@ namespace DAO
                 }
             }
         }
-
-        public List<Machines> GetAllMachine()
-        {
-            using (MyDBContext myDb = new MyDBContext())
-            {
-
-                return myDb.Machines.ToList();
-
-            }
-        }
-
-        public List<MachineTools> GetAllMachineTools()
-        {
-
-            using (MyDBContext myDb = new MyDBContext())
-            {
-
-                return myDb.MachineTools.ToList();
-
-            }
-
-        }
-
-
     }
 }

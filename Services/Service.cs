@@ -38,15 +38,15 @@ namespace Services
             _repository.UpdateTurret(turret);
         }
 
-        public void DeleteTurrets(int id)
+        public void DeleteTurrets(string turretCode)
         {
-            _repository.DeleteTurrets(id);
+            _repository.DeleteTurrets(turretCode);
         }
 
         //Metodi per Machines
         public List<Machines> GetAllMachines()
         {
-            return _repository.GetAllMachine();
+            return _repository.GetAllMachines();
         }
 
         public Machines GetMachineById(int id)
@@ -64,9 +64,14 @@ namespace Services
             _repository.UpdateMachine(machine);
         }
 
-        public void DeleteMachine(int id)
+        public void DeleteMachine(string machineCode)
         {
-            _repository.DeleteMachine(id);
+            _repository.DeleteMachine(machineCode);
+        }
+
+        public void DeleteMachine(Machines machine)
+        {
+            _repository.DeleteMachine(machine);
         }
 
         //Metodi per MachineTools
@@ -90,9 +95,9 @@ namespace Services
             _repository.UpdateMachineTools(machineTool);
         }
 
-        public void DeleteMachineTools(int id)
+        public void DeleteMachineTools(string idTool)
         {
-            _repository.DeleteMachineTools(id);
+            _repository.DeleteMachineTools(idTool);
         }
 
         //Metodi per Tools
@@ -116,16 +121,18 @@ namespace Services
             _repository.UpdateTools(tool);
         }
 
-        public void DeleteToos(int id)
+        public void DeleteTools(string idTool)
         {
-            _repository.DeleteTools(id);
+            _repository.DeleteTools(idTool);
         }
 
+
+        /*
         public List<Machines> GetAllMachines()
         {
 
             var repo = new Repository();
-            return repo.GetAllMachine();
+            return repo.GetAllMachines();
 
         }
 
@@ -136,5 +143,7 @@ namespace Services
             return repo.GetAllMachineTools();
 
         }
+
+        */
     }
 }

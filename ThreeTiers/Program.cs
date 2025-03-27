@@ -1,4 +1,5 @@
 ﻿using DAO;
+using Microsoft.SqlServer.Server;
 using Services;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace ThreeTiers
 
             //Creazione Service per Machine
             var machines = service.GetAllMachines();
-            StampaMachine(machines);
+            StampaMachines(machines);
 
             //Creazione Service per MachineTools
             var machineTools = service.GetAllMachineTools();
@@ -33,6 +34,57 @@ namespace ThreeTiers
             StampaTools(tools);
 
 
+            //Test metodi Turrets
+            var turret = new Turrets { TurretCode = "0001", Description = "Nuovo Turret" };
+            service.InsertTurret(turret);
+            Console.WriteLine("Inserito nuovo Turret");
+
+
+
+            turret.Description = "Aggiorna il Turret 4";
+            service.UpdateTurret(turret);
+            Console.WriteLine("Turret Aggiornato");
+
+            service.DeleteTurrets(turret.TurretCode);
+            Console.WriteLine("Turret Eliminato");
+
+
+            // Test metodi per Machines
+            var machine = new Machines { MachineCode = "M001", Description = "MOG 1" };
+            service.InsertMachine(machine);
+            Console.WriteLine("Nuova Macchina Inserita.");
+
+            service.DeleteMachine(machine.MachineCode);
+            Console.WriteLine("Macchina Eliminata");
+
+
+            // Test metodi per MachineTools
+            var machineTool = new MachineTools { IdTool = "5614", PositionCode = "T2", PartNumber = "F01M100714", MachineCode = "EMAG 1", PositionDescription = "Position 3" };
+            service.InsertMachineTools(machineTool);
+            Console.WriteLine("Nuovo MachineTool Inserito");
+
+            machineTool.PositionDescription = "Aggiornata Posizione 10";
+            service.UpdateMachineTools(machineTool);
+            Console.WriteLine("MachineTool Aggiornata");
+
+            service.DeleteMachineTools(machineTool.IdTool);
+            Console.WriteLine("MachineTool Eliminata");
+
+
+            // Test metodi per Tools
+            var tool = new Tools { IdTool = "T10", BoschCode = "HW70719LB0", Description = "Generics", PrimarySupplier = "Special", Quantity = 1 };
+            service.InsertTools(tool);
+            Console.WriteLine("Nuovo Tool Inserito");
+            StampaTools(tools);
+
+            tool.Description = "Aggiornato Tool 2";
+            service.UpdateTools(tool);
+            Console.WriteLine("Tool Aggiornato");
+            StampaTools(tools);
+
+            service.DeleteTools(tool.IdTool);
+            Console.WriteLine("Tool Eliminato");
+            StampaTools(tools);
         }
 
         static void StampaTurrets(List<Turrets> turrets)
@@ -62,13 +114,13 @@ namespace ThreeTiers
             Console.WriteLine();
         }
 
-        static void StampaMachine(List<Machines> machine)
+        static void StampaMachines(List<Machines> machines)
         {
             // Calcolo della larghezza massima per ogni colonna
-            int machineCodeWidth = Math.Max("MachineCode".Length, machine.Max(m => m.MachineCode.Length));
-            int descriptionWidth = Math.Max("Description".Length, machine.Max(m => m.Description.Length));
-            int storeToolsFileNameWidth = Math.Max("StoreToolsFileName".Length, machine.Where(m => m.StoreToolsFileName != null).Max(m => m.StoreToolsFileName.Length));
-            int lineWidth = Math.Max("Line".Length, machine.Where(m => m.Line != null).Max(m => m.Line.Length));
+            int machineCodeWidth = Math.Max("MachineCode".Length, machines.Max(m => m.MachineCode.Length));
+            int descriptionWidth = Math.Max("Description".Length, machines.Max(m => m.Description.Length));
+            int storeToolsFileNameWidth = Math.Max("StoreToolsFileName".Length, machines.Where(m => m.StoreToolsFileName != null).Max(m => m.StoreToolsFileName.Length));
+            int lineWidth = Math.Max("Line".Length, machines.Where(m => m.Line != null).Max(m => m.Line.Length));
 
             // Creazione della stringa di formattazione dinamica
             string format = string.Format("{{0, -{0}}} {{1, -{1}}} {{2, -{2}}} {{3, -{3}}}",
@@ -82,9 +134,9 @@ namespace ThreeTiers
             Console.WriteLine(new string('-', totalWidth));
 
             // Stampa in formato tabellare per ogni riga
-            foreach (var machines in machine)
+            foreach (var machine in machines)
             {
-                Console.WriteLine(format, machines.MachineCode, machines.Description, machines.StoreToolsFileName, machines.Line);
+                Console.WriteLine(format, machine.MachineCode, machine.Description, machine.StoreToolsFileName, machine.Line);
             }
         }
 
@@ -118,6 +170,7 @@ namespace ThreeTiers
             Console.WriteLine();
         }
 
+        /*
         static void StampaTools(List<Tools> tools)
         {
             //Calcolo della larghezza massima per ogni colonna
@@ -152,37 +205,57 @@ namespace ThreeTiers
             Console.WriteLine();
         }
 
-        static void StampaMachine(List<Machines> machine)
+        */
+
+        //Metodo per richiamare format
+        static string GetToolsFormat(List<Tools> tools)
         {
-            //Stampa intestazione tabella
-            Console.WriteLine("{0, -10} {1, -20} {2, -20} {3, -20}", "MachineCode", "Description", "StoreToolsFileName", "Line");
-            Console.WriteLine(new string('-', 30));
+            //Calcolo della larghezza massima per ogni colonna
+            int idToolWidth = Math.Max("IdTool".Length, tools.Max(t => t.IdTool.ToString().Length));
+            int boschCodeWidth = Math.Max("BoschCode".Length, tools.Max(t => t.BoschCode.Length));
+            int descriptionWidth = Math.Max("Description".Length, tools.Max(t => t.Description.Length));
+            int primarySupplierWidth = Math.Max("PrimarySupplier".Length, tools.Max(t => t.PrimarySupplier.Length));
+            int secondarySupplierWidth = Math.Max("SecondarySupplier".Length, tools.Max(t => (t.SecondarySupplier ?? "").Length));  //?? sostituisce null con una stringa vuota
+            int primarySharpenerWidth = Math.Max("PrimarySharpener".Length, tools.Max(t => (t.PrimarySharpener ?? "").Length));
+            int secondarySharpenerWidth = Math.Max("SecondarySharpener".Length, tools.Max(t => (t.SecondarySharpener ?? "").Length));
+            int quantityWidth = Math.Max("Quantity".Length, tools.Max(t => t.Quantity.ToString().Length));
+            int turretCodeWidth = Math.Max("TurretCode".Length, tools.Max(t => t.TurretCode != null ? t.TurretCode.Length : 0));
 
-            //Calcolo max lunghezza campi
 
+            //Creazione della stringa di formattazione dinamica
+            string format = string.Format("{{0, -{0}}} {{1, -{1}}} {{2, -{2}}} {{3, -{3}}} {{4, -{4}}} {{5, -{5}}} {{6, -{6}}} {{7, -{7}}} {{8, -{8}}}",
+                idToolWidth, boschCodeWidth, descriptionWidth, primarySupplierWidth, secondarySupplierWidth, primarySharpenerWidth, secondarySharpenerWidth, quantityWidth, turretCodeWidth);
 
+            return format;
+        }
+        
+        static void StampaTools(List<Tools> tools)
+        {
+            string format = GetToolsFormat(tools);
 
-            //Stampa in formato tabellare
-            foreach (var machines in machine)
+            //Stampa intestazione
+            Console.WriteLine(format, "IdTool", "BoschCode", "Description", "PrimarySupplier", "SecondarySupplier", "PrimarySharpener", "SecondarySharpener", "Quantity", "TurretCode");
+
+            int totalWidth = format.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length + 8;
+            Console.WriteLine(new string('-', totalWidth * 10)); //linea separatrice
+
+            //Stampa ogni riga
+            foreach (var t in tools)
             {
-                Console.WriteLine("{0, -10} {1, -20} {2, -20} {3, -20}", machines.MachineCode.Length, machines.Description, machines.StoreToolsFileName, machines.Line);
+                StampaTool(t);
             }
-
-
         }
 
-        static void StampaMachineTools(List<MachineTools> machineTools)
+        //Creare metodo per stampare un singolo Tool
+        static void StampaTool(Tools t)
         {
-            //Stampa intestazione tabella
-            Console.WriteLine("{0, -10} {1, -20} {2, -20} {3, -20} {4, -20}", "IdTool", "PositionCode", "PartNumber", "MachineCode", "PositionDescription");
-            Console.WriteLine(new string('-', 30));
+            //Lista contenente singolo elemento da riutilizzare
+            var singleTool = new List<Tools> { t };
+            string format = GetToolsFormat(singleTool);
 
-            //Stampa in formato tabellare
-            foreach (var machine in machineTools)
-            {
-                Console.WriteLine("{0, -10} {1, -20} {2, -20} {3, -20} {4, -20}", machine.IdTool, machine.PositionCode, machine.PartNumber, machine.MachineCode, machine.PositionDescription);
-            }
+            Console.WriteLine(format, t.IdTool, t.BoschCode, t.Description, t.PrimarySupplier, t.SecondarySupplier, t.PrimarySharpener, t.SecondarySharpener, t.Quantity, t.TurretCode);
         }
 
+        //Usare questo metodo sia in stampa lista tool sia nel program
     }
 }

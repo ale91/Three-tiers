@@ -148,6 +148,41 @@ namespace ThreeTiers
             {
                 Console.WriteLine(format, t.IdTool, t.BoschCode, t.Description, t.PrimarySupplier, t.SecondarySupplier, t.PrimarySharpener, t.SecondarySharpener, t.Quantity, t.TurretCode);
             }
+
+            Console.WriteLine();
         }
+
+        static void StampaMachine(List<Machines> machine)
+        {
+            //Stampa intestazione tabella
+            Console.WriteLine("{0, -10} {1, -20} {2, -20} {3, -20}", "MachineCode", "Description", "StoreToolsFileName", "Line");
+            Console.WriteLine(new string('-', 30));
+
+            //Calcolo max lunghezza campi
+
+
+
+            //Stampa in formato tabellare
+            foreach (var machines in machine)
+            {
+                Console.WriteLine("{0, -10} {1, -20} {2, -20} {3, -20}", machines.MachineCode.Length, machines.Description, machines.StoreToolsFileName, machines.Line);
+            }
+
+
+        }
+
+        static void StampaMachineTools(List<MachineTools> machineTools)
+        {
+            //Stampa intestazione tabella
+            Console.WriteLine("{0, -10} {1, -20} {2, -20} {3, -20} {4, -20}", "IdTool", "PositionCode", "PartNumber", "MachineCode", "PositionDescription");
+            Console.WriteLine(new string('-', 30));
+
+            //Stampa in formato tabellare
+            foreach (var machine in machineTools)
+            {
+                Console.WriteLine("{0, -10} {1, -20} {2, -20} {3, -20} {4, -20}", machine.IdTool, machine.PositionCode, machine.PartNumber, machine.MachineCode, machine.PositionDescription);
+            }
+        }
+
     }
 }

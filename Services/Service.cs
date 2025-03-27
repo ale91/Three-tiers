@@ -120,5 +120,21 @@ namespace Services
         {
             _repository.DeleteTools(id);
         }
+
+        public List<Machines> GetAllMachines()
+        {
+
+            var repo = new Repository();
+            return repo.GetAllMachine();
+
+        }
+
+        public List<MachineTools> GetMachineAllTools()
+        {
+
+            var repo = new Repository();
+            return repo.GetAllMachineTools();
+
+        }
     }
 }

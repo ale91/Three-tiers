@@ -54,12 +54,7 @@
     <Compile Include="Machines.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="MachineTools.cs" />
-<<<<<<< HEAD
-
     <Compile Include="Tools.cs" />
-
-=======
->>>>>>> 1cf2cb1f010559ca26cc796fdee0fde3b017f0ca
     <Compile Include="Turrets.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

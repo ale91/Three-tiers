@@ -51,7 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Machines.cs" />
     <Compile Include="Repository.cs" />
+    <Compile Include="MachineTools.cs" />
+
+    <Compile Include="Tools.cs" />
+
     <Compile Include="Turrets.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

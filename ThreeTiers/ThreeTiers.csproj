@@ -61,10 +61,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAO\DAO.csproj">
-      <Project>{57AA5AC5-97F9-4216-81FF-9CA8BFE456E5}</Project>
-      <Name>DAO</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Services\Services.csproj">
       <Project>{2FCB6111-CAAD-4F75-8051-810981604FE3}</Project>
       <Name>Services</Name>

@@ -12,12 +12,22 @@ namespace DAO
     class MyDBContext : DbContext
     {
         public DbSet<Turrets> Turrets { get; set; }
+
+        //Aggiunta di Machine e MachineTool
+        public DbSet<Machines> Machines { get; set; }
+
+        //Aggiunta di MachineTools
+        public DbSet<MachineTools> MachineTools { get; set; }
+
+        //Aggiunta di Tools
+        public DbSet<Tools> Tools { get; set; }
+
         public MyDBContext() : base("name=ToolsConnectionString") //collegamento database prende stringa connessione nell'app.config
         {
             Database.Log = sql => Debug.Write(sql);
         }
 
-        //mappatura tabella
+        //mappatura tabella Turrets, Machine, MachineTools e Tools
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("Config");
@@ -25,6 +35,22 @@ namespace DAO
             modelBuilder.Entity<Turrets>().ToTable("Turrets");
 
             modelBuilder.Entity<Turrets>().HasKey(p => new { p.TurretCode });
+
+            //Machine
+            modelBuilder.Entity<Machines>().ToTable("Machines");
+
+            modelBuilder.Entity<Machines>().HasKey(p => new { p.MachineCode });
+
+            //MachineTools
+            modelBuilder.Entity<MachineTools>().ToTable("MachineTools");
+
+            modelBuilder.Entity<MachineTools>().HasKey(p => new { p.IdTool });
+
+            //Tools
+            modelBuilder.Entity<Tools>().ToTable("Tools");
+
+            modelBuilder.Entity<Tools>().HasKey(p => new { p.IdTool });
         }
     }
+        
 }

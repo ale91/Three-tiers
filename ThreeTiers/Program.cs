@@ -30,13 +30,17 @@ namespace ThreeTiers
             // Test metodi per Tools
 
             // Creazione e stampa nuovo Tool
+            Random rdn = new Random();
             var tool = new Tools
             {
                 IdTool = "T10",
                 BoschCode = "HW70719LB0",
                 Description = "Generics",
                 PrimarySupplier = "Special",
-                Quantity = 1
+                Quantity = 1,
+
+                // Valorizzazione casuale del ToolType da 1 a 3
+                ToolType = rdn.Next(1, 4)
             };
             StampaTool(tool);
 
@@ -159,6 +163,9 @@ namespace ThreeTiers
             int quantityWidth = Math.Max("Quantity".Length, tools.Select(t => t?.Quantity.ToString().Length ?? 0).DefaultIfEmpty(0).Max());
             int turretCodeWidth = Math.Max("TurretCode".Length, tools.Where(t => t?.TurretCode != null).Select(t => t.TurretCode.Length).DefaultIfEmpty(0).Max());
 
+            // Stampa del ToolType
+            int toolTypeWidth = Math.Max("ToolType".Length, tools.Select(t => t.ToolType.ToString().Length).DefaultIfEmpty(0).Max());
+
             string format = string.Format("{{0, -{0}}} {{1, -{1}}} {{2, -{2}}} {{3, -{3}}} {{4, -{4}}} {{5, -{5}}} {{6, -{6}}} {{7, -{7}}} {{8, -{8}}}",
                 idToolWidth, boschCodeWidth, descriptionWidth, primarySupplierWidth, secondarySupplierWidth, primarySharpenerWidth, secondarySharpenerWidth, quantityWidth, turretCodeWidth);
 
@@ -176,7 +183,7 @@ namespace ThreeTiers
             string format = GetToolsFormat(tools);
 
             // Stampa intestazione
-            Console.WriteLine(format, "IdTool", "BoschCode", "Description", "PrimarySupplier", "SecondarySupplier", "PrimarySharpener", "SecondarySharpener", "Quantity", "TurretCode");
+            Console.WriteLine(format, "IdTool", "BoschCode", "Description", "PrimarySupplier", "SecondarySupplier", "PrimarySharpener", "SecondarySharpener", "Quantity", "TurretCode", "ToolType"); // È stato aggiunto ToolType
 
             // Calcolo della larghezza totale in modo più affidabile
             int totalWidth = format.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Sum(x => int.Parse(x.Trim('{', '}', '-', ','))) + 8;
@@ -201,7 +208,7 @@ namespace ThreeTiers
 
             var singleTool = new List<Tools> { t };
             string format = GetToolsFormat(singleTool);
-            Console.WriteLine(format, t.IdTool, t.BoschCode, t.Description, t.PrimarySupplier, t.SecondarySupplier, t.PrimarySharpener, t.SecondarySharpener, t.Quantity, t.TurretCode);
+            Console.WriteLine(format, t.IdTool, t.BoschCode, t.Description, t.PrimarySupplier, t.SecondarySupplier, t.PrimarySharpener, t.SecondarySharpener, t.Quantity, t.TurretCode, t.ToolType);
         }
     }
 }

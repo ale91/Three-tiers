@@ -25,5 +25,8 @@ namespace DAO
         public virtual int Quantity { get; set; }
 
         public virtual string TurretCode { get; set; }
+
+        //Aggiunta nuova proprietà
+        public virtual int ToolType { get; set; }
     }
 }

@@ -54,14 +54,18 @@
     <Compile Include="Machines.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="MachineTools.cs" />
+    <Compile Include="Repository.Machines.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="Turrets.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository.Turrets.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <Compile Include="Repository.MachineTool.cs" />
+    <Compile Include="Repository.Tools.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

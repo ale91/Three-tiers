@@ -50,6 +50,9 @@ namespace DAO
             modelBuilder.Entity<Tools>().ToTable("Tools");
 
             modelBuilder.Entity<Tools>().HasKey(p => new { p.IdTool });
+
+            //Cofigurazione della nuova proprietà ToolType
+            modelBuilder.Entity<Tools>().Property(t => t.ToolType).IsRequired();
         }
     }
 

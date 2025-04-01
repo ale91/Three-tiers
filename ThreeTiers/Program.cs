@@ -29,38 +29,50 @@ namespace ThreeTiers
 
             // Test metodi per Tools
 
-            // Creazione e stampa nuovo Tool
-            Random rdn = new Random();
-            var tool = new Tools
+            try
             {
-                IdTool = "T10",
-                BoschCode = "HW70719LB0",
-                Description = "Generics",
-                PrimarySupplier = "Special",
-                Quantity = 1,
+                // Creazione e stampa nuovo Tool
+                Random rdn = new Random();
+                var tool = new Tools
+                {
+                    IdTool = "T10",
+                    BoschCode = "HW70719LB0",
+                    Description = "Generics",
+                    PrimarySupplier = "Special",
+                    Quantity = 1,
 
-                // Valorizzazione casuale del ToolType da 1 a 3
-                ToolType = rdn.Next(1, 4)
-            };
-            StampaTool(tool);
+                    // Valorizzazione casuale del ToolType da 1 a 3
+                    ToolType = rdn.Next(1, 4)
+                };
+                StampaTool(tool);
 
-            // Inserimento, lettura e stampa del tool
-            service.InsertTools(tool);
-            var insertedTool = service.GetToolsById(tool.IdTool);
-            Console.WriteLine("Nuovo Tool Inserito");
+                // Inserimento, lettura e stampa del tool
+                service.InsertTools(tool);
+                var insertedTool = service.GetToolsById(tool.IdTool);
+                Console.WriteLine("Nuovo Tool Inserito");
 
-            // Aggiornamento del tool
-            tool.Description = "Aggiornato Tool 2";
-            service.UpdateTools(tool);
-            var updatedTool = service.GetToolsById(tool.IdTool);
-            Console.WriteLine("Tool Aggiornato");
-            StampaTool(updatedTool); // Stampa il tool aggiornato
+                // Aggiornamento del tool
+                tool.Description = "Aggiornato Tool 2";
+                service.UpdateTools(tool);
+                var updatedTool = service.GetToolsById(tool.IdTool);
+                Console.WriteLine("Tool Aggiornato");
+                StampaTool(updatedTool); // Stampa il tool aggiornato
 
-            // Cancellazione del tool
-            service.DeleteTools(tool.IdTool);
-            var deletedTool = service.GetToolsById(tool.IdTool);
-            Console.WriteLine("Tool Eliminato");
-            StampaTool(deletedTool);
+                // Cancellazione del tool
+                service.DeleteTools(tool.IdTool);
+                var deletedTool = service.GetToolsById(tool.IdTool);
+                Console.WriteLine("Tool Eliminato");
+                StampaTool(deletedTool);
+            }
+            catch(Exception ex)
+            {
+                //Imposta il testo rosso e lo sfondo giallo
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.BackgroundColor = ConsoleColor.Yellow;
+
+                Console.WriteLine($"Errore: {ex.Message}");
+            }
+           
         }
 
         static void StampaTurrets(List<Turrets> turrets)

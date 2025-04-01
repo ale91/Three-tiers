@@ -8,7 +8,6 @@ namespace DAO
 {
     public class Tools
     {
-
         public virtual string IdTool { get; set; }
         public virtual string BoschCode { get; set; }
 
@@ -27,6 +26,6 @@ namespace DAO
         public virtual string TurretCode { get; set; }
 
         //Aggiunta nuova proprietà
-        public virtual int ToolType { get; set; }
+        public virtual int? ToolType { get; set; }
     }
 }

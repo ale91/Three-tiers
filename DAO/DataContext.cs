@@ -24,7 +24,7 @@ namespace DAO
 
         public MyDBContext() : base("name=ToolsConnectionString") //collegamento database prende stringa connessione nell'app.config
         {
-            Database.Log = sql => Debug.Write(sql);
+            Database.Log = sql => Debug.Write(sql); //configura il contesto del database (MyDBContext) per registrare tutte le query SQL generate da Entity Framework. In particolare, utilizza il metodo Debug.Write per scrivere queste query nella finestra di output del debugger
         }
 
         //mappatura tabella Turrets, Machine, MachineTools e Tools
@@ -52,7 +52,7 @@ namespace DAO
             modelBuilder.Entity<Tools>().HasKey(p => new { p.IdTool });
 
             //Cofigurazione della nuova proprietà ToolType
-            modelBuilder.Entity<Tools>().Property(t => t.ToolType).IsRequired();
+            modelBuilder.Entity<Tools>().Property(t => t.ToolType).IsOptional();
         }
     }
 

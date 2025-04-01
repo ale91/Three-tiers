@@ -39,14 +39,15 @@ namespace DAO
 		}
 
 		//Metodo Update (aggiunto)
-		public void UpdateTools(Tools tool)
+		public int UpdateTools(Tools tool)
 		{
 			using (MyDBContext myDb = new MyDBContext())
 			{
 				myDb.Tools.AddOrUpdate(tool);
-				myDb.SaveChanges();
-			}
+                return myDb.SaveChanges();
+            }
 		}
+
 
 		//Metodo Delete per id (aggiunto)
 		public void DeleteTools(string idTool)
@@ -61,5 +62,14 @@ namespace DAO
 				}
 			}
 		}
-	}
+
+		public List<Tools> GetToolsByToolType(int toolType)
+		{
+			using (MyDBContext myDb = new MyDBContext())
+			{
+				return myDb.Tools.Where(t => t.ToolType == toolType).ToList();
+			}
+        }
+
+    }
 }

@@ -37,7 +37,7 @@ namespace Services
 
         public void UpdateTools(Tools tool)
         {
-            _repository.UpdateTools(tool);
+            _repository.UpdateTool(tool);
         }
 
         public void DeleteTools(string idTool)
@@ -49,17 +49,31 @@ namespace Services
         {
            var tools = _repository.GetAllTools().Where(tool => tool.ToolType == null).ToList();
 
+            // Per ciascun tool genera un numero casuale
+            foreach(var tool in tools)
+            {
+                tool.ToolType = GeneraNumero();
+            }
+
+            // Richiamo il metodo UpdateAllTools
+            int updatedTools = _repository.UpdateAllTools(tools);
+
+            return updatedTools;
+
+            /* 
+
             var Count = 0;
 
             //controllo se tooltype è null
             foreach (var tool in tools)
             {
                 tool.ToolType = GeneraNumero();
-                _repository.UpdateTools(tool);  //restituire numero e salvare
-
+                
                 //incrementare la variabile Count aggiungendo valore restituito da _repository.UpdateTools(tool)
-
+                Count += _repository.UpdateTool(tool);
             }
+
+            */
 
             /*
             foreach (var tool in tools)
@@ -71,7 +85,7 @@ namespace Services
             */
 
             //return numero dei tool aggiornati
-            return Count;
+           // return Count;  /legato al var count
 
         }
 

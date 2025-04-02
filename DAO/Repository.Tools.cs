@@ -39,15 +39,28 @@ namespace DAO
 		}
 
 		//Metodo Update (aggiunto)
-		public int UpdateTools(Tools tool)
+		public int UpdateTool(Tools tool)
 		{
 			using (MyDBContext myDb = new MyDBContext())
 			{
 				myDb.Tools.AddOrUpdate(tool);
-                return myDb.SaveChanges();
+				var t = myDb.SaveChanges();
+				return t;
             }
 		}
 
+		//Metodo Update per tutti i tools
+		public int UpdateAllTools(List<Tools> tools)
+		{
+			using (MyDBContext myDb = new MyDBContext())
+			{
+				foreach(var tool in tools) //per ogni tool nella lista
+				{
+					myDb.Tools.AddOrUpdate(tool); //viene chiamato il metodo AddOrUpdate del contesto del db, aggiunge un tool se non esiste, altrimenti lo aggiorna
+				}
+				return myDb.SaveChanges();
+			}
+		}
 
 		//Metodo Delete per id (aggiunto)
 		public void DeleteTools(string idTool)

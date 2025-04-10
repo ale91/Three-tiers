@@ -52,5 +52,11 @@
     <Compile Include="ToolService.cs" />
     <Compile Include="TurretService.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAO\DAO.csproj">
+      <Project>{57AA5AC5-97F9-4216-81FF-9CA8BFE456E5}</Project>
+      <Name>DAO</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
